@@ -27,9 +27,9 @@ pipeline {
              
                 
             
-                sh 'sudo chmod +x shiftleft' 
+                sh 'chmod +x shiftleft' 
 
-                sh 'sudo ./shiftleft code-scan -s .'
+                sh './shiftleft code-scan -s .'
            
                } catch (Exception e) {
     
@@ -53,8 +53,8 @@ pipeline {
              
             steps {
 
-              sh 'sudo -S docker build -t dhouari/webapp .'
-              sh 'sudo -S docker save dhouari/webapp -o webapp.tar'
+              sh '-S docker build -t dhouari/webapp .'
+              sh '-S docker save dhouari/webapp -o webapp.tar'
               
              } 
            }
@@ -66,7 +66,7 @@ pipeline {
                 script {      
               try {
          
-                    sh 'sudo ./shiftleft image-scan -t 180 -i webapp.tar'
+                    sh './shiftleft image-scan -t 180 -i webapp.tar'
                    } catch (Exception e) {
     
                  echo "Request for Approval"  
@@ -88,7 +88,7 @@ pipeline {
            
             steps {
          
-                    sh 'sudo ./shiftleft iac-assessment -l S3Bucket should have encryption.serverSideEncryptionRules -p ./terraform'
+                    sh './shiftleft iac-assessment -l S3Bucket should have encryption.serverSideEncryptionRules -p ./terraform'
                     
               }
             }
